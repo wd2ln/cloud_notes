@@ -106,6 +106,19 @@
       order by ${orderByClause}
     </if>
   </select>
+<!--  新建 start-->
+  <select id="selectByDateAndCount" parameterType="com.zp.entity.TbNoteExample" resultMap="BaseResultMap">
+    select
+    
+    from tb_note
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+<!--  新建 end-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

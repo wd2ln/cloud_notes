@@ -24,7 +24,7 @@ public class TbNoteServiceImpl implements TbNoteService {
         TbNoteExample.Criteria criteria = tbNoteExample.createCriteria();
         criteria.andTypeIdEqualTo((tbNote.getTypeId()));
         //设置分页
-        PageHelper.offsetPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum,pageSize);
         //获取查询结果
         List<TbNote> tbNotes = tbNoteMapper.selectByExample(tbNoteExample);
         Map<String, Object> map =null;
@@ -32,6 +32,7 @@ public class TbNoteServiceImpl implements TbNoteService {
         if (tbNotes!=null){
             //将分页结果放入
             PageInfo<TbNote> tbNotePageInfo = new PageInfo<>(tbNotes);
+            System.out.println(tbNotePageInfo);
             map=new HashMap<String, Object>();
             map.put("pageinfo",tbNotePageInfo);
             map.put("total",tbNotePageInfo.getTotal());
@@ -42,10 +43,7 @@ public class TbNoteServiceImpl implements TbNoteService {
     @Override
     public Map<String, Object> getDateInfo(TbNote tbNote, Integer pageNum, Integer pageSize) {
         //设置查询所需的参数
-        TbNoteExample tbNoteExample = new TbNoteExample();
-        tbNoteExample.createCriteria()
-            .andTypeIdEqualTo((tbNote.getTypeId()));
-        //tbNoteMapper.selectByExampleWithBLOBs()
+
         return null;
     }
 

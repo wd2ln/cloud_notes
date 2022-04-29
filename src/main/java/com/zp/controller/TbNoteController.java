@@ -21,7 +21,7 @@ public class TbNoteController {
     @PostMapping("page")
     public ModelAndView indexPage(HttpServletRequest request, HttpServletResponse response,
                                   @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                  @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+                                  @RequestParam(value = "pageSize",defaultValue = "3") Integer pageSize){
         HttpSession session = request.getSession(false);
         TbUser user = (TbUser) session.getAttribute("user");
         TbNote tbNote = new TbNote();
