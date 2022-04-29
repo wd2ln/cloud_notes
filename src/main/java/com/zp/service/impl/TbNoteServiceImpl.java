@@ -3,9 +3,11 @@ package com.zp.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zp.dao.TbNoteMapper;
+import com.zp.dao.TbNoteTypeMapper;
 import com.zp.entity.TbDateAndCount;
 import com.zp.entity.TbNote;
 import com.zp.entity.TbNoteExample;
+import com.zp.entity.TbNoteTypeExample;
 import com.zp.service.TbNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import java.util.Map;
 public class TbNoteServiceImpl implements TbNoteService {
     @Autowired
     private TbNoteMapper tbNoteMapper;
+    @Autowired
+    private TbNoteTypeMapper tbNoteTypeMapper;
     @Override
     public Map<String,Object> getDates(TbNote tbNote, Integer pageNum, Integer pageSize) {
         //设置查询所需的参数
@@ -46,7 +50,14 @@ public class TbNoteServiceImpl implements TbNoteService {
         //设置查询所需的参数
         Integer typeId = tbNote.getTypeId();
         List<TbDateAndCount> tbDateAndCounts = tbNoteMapper.selectByDateAndCount(typeId);
-        System.out.println(tbDateAndCounts);
+        //处理返回日期格式
+        for (TbDateAndCount tbDateAndCount : tbDateAndCounts) {
+            String groupName = tbDateAndCount.getGroupName();
+            String[] s = groupName.split(" ");
+            String s1 = s[0]+"年";
+            String s2 = s[1]+"月";
+            tbDateAndCount.setGroupName(s1+s2);
+        }
         Map<String,Object> map;
         map=new HashMap<String, Object>();
         map.put("dateinfo",tbDateAndCounts);
@@ -56,8 +67,9 @@ public class TbNoteServiceImpl implements TbNoteService {
     @Override
     public Map<String, Object> getDateType(Integer id) {
         //设置查询所需的参数
-
-
+        TbNoteTypeExample tbNoteTypeExample = new TbNoteTypeExample();
+//        tbNoteTypeExample.createCriteria().andid
+//        tbNoteTypeMapper.countByExample()
         return null;
     }
 }

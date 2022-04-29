@@ -31,7 +31,7 @@ public class TbNoteController {
         session.setAttribute("page",dates.get("pageinfo"));
         //获取云记日期
         Map<String, Object> dateInfo = tbNoteService.getDateInfo(tbNote);
-        session.setAttribute("dateinfo",dateInfo.get("dateinfo"));
+        session.setAttribute("dateInfo",dateInfo.get("dateinfo"));
         //获取云记类别
         tbNoteService.getDateType(user.getId());
         ModelAndView modelAndView = new ModelAndView();
