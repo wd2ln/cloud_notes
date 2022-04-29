@@ -1,5 +1,6 @@
 package com.zp.dao;
 
+import com.zp.entity.TbDateAndCount;
 import com.zp.entity.TbNote;
 import com.zp.entity.TbNoteExample;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +15,8 @@ public interface TbNoteMapper {
     int deleteByExample(TbNoteExample example);
 
     int deleteByPrimaryKey(Integer id);
+    //自定义
+    List<TbDateAndCount> selectByDateAndCount(Integer typeId);
 
     int insert(TbNote record);
 

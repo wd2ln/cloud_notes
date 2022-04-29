@@ -9,6 +9,10 @@
     <result column="lon" jdbcType="REAL" property="lon" />
     <result column="lat" jdbcType="REAL" property="lat" />
   </resultMap>
+<!--  <resultMap id="TbDataCount" type="com.zp.entity.TbDateAndCount">-->
+<!--    <result column="groupName" jdbcType="date" property="groupName"/>-->
+<!--    <result column="noteCount" jdbcType="INTEGER" property="noteCount"/>-->
+<!--  </resultMap>-->
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zp.entity.TbNote">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
@@ -107,16 +111,10 @@
     </if>
   </select>
 <!--  新建 start-->
-  <select id="selectByDateAndCount" parameterType="com.zp.entity.TbNoteExample" resultMap="BaseResultMap">
-    select
-    
-    from tb_note
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
+  <select id="selectByDateAndCount" parameterType="java.lang.Integer" resultType="com.zp.entity.TbDateAndCount">
+    select DATE_FORMAT(pub_time,'%Y %m') groupName,
+    count(*) noteCount from tb_note where type_id=#{type_id,jdbcType=INTEGER} group by DATE_FORMAT(pub_time,'%Y %m')
+     ORDER BY DATE_FORMAT(pub_time,'%Y %m')
   </select>
 <!--  新建 end-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">

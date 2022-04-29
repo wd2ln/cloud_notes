@@ -3,6 +3,7 @@ package com.zp.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zp.dao.TbNoteMapper;
+import com.zp.entity.TbDateAndCount;
 import com.zp.entity.TbNote;
 import com.zp.entity.TbNoteExample;
 import com.zp.service.TbNoteService;
@@ -41,10 +42,15 @@ public class TbNoteServiceImpl implements TbNoteService {
     }
 
     @Override
-    public Map<String, Object> getDateInfo(TbNote tbNote, Integer pageNum, Integer pageSize) {
+    public Map<String, Object> getDateInfo(TbNote tbNote) {
         //设置查询所需的参数
-
-        return null;
+        Integer typeId = tbNote.getTypeId();
+        List<TbDateAndCount> tbDateAndCounts = tbNoteMapper.selectByDateAndCount(typeId);
+        System.out.println(tbDateAndCounts);
+        Map<String,Object> map;
+        map=new HashMap<String, Object>();
+        map.put("dateinfo",tbDateAndCounts);
+        return map;
     }
 
     @Override
