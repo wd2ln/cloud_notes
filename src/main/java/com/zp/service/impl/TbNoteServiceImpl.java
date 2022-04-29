@@ -65,11 +65,17 @@ public class TbNoteServiceImpl implements TbNoteService {
     }
 
     @Override
-    public Map<String, Object> getDateType(Integer id) {
+    public Map<String, Object> getDateType(TbNote tbNote) {
         //设置查询所需的参数
-        TbNoteTypeExample tbNoteTypeExample = new TbNoteTypeExample();
-//        tbNoteTypeExample.createCriteria().andid
-//        tbNoteTypeMapper.countByExample()
-        return null;
+        Integer user_id = tbNote.getTypeId();
+        System.out.println(user_id+"=================");
+        List<TbDateAndCount> tbDateAndCounts=null;
+        tbDateAndCounts = tbNoteTypeMapper.selectByType(user_id);
+        System.out.println("异常");
+        System.out.println(tbDateAndCounts);
+        Map<String,Object> map;
+        map=new HashMap<String, Object>();
+        map.put("typeinfo",tbDateAndCounts);
+        return map;
     }
 }

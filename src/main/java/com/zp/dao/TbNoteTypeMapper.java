@@ -1,5 +1,6 @@
 package com.zp.dao;
 
+import com.zp.entity.TbDateAndCount;
 import com.zp.entity.TbNoteType;
 import com.zp.entity.TbNoteTypeExample;
 import org.apache.ibatis.annotations.Param;
@@ -11,6 +12,9 @@ public interface TbNoteTypeMapper {
     long countByExample(TbNoteTypeExample example);
 
     int deleteByExample(TbNoteTypeExample example);
+
+    //自定义类型查询
+    List<TbDateAndCount> selectByType(Integer user_id);
 
     int deleteByPrimaryKey(Integer id);
 

@@ -23,6 +23,7 @@ public class TbNoteController {
                                   @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                   @RequestParam(value = "pageSize",defaultValue = "3") Integer pageSize){
         HttpSession session = request.getSession(false);
+        //获取用户id
         TbUser user = (TbUser) session.getAttribute("user");
         TbNote tbNote = new TbNote();
         tbNote.setTypeId(user.getId());
@@ -33,7 +34,8 @@ public class TbNoteController {
         Map<String, Object> dateInfo = tbNoteService.getDateInfo(tbNote);
         session.setAttribute("dateInfo",dateInfo.get("dateinfo"));
         //获取云记类别
-        tbNoteService.getDateType(user.getId());
+        Map<String, Object> dateType = tbNoteService.getDateType(tbNote);
+        session.setAttribute("typeInfo",dateType.get("typeinfo"));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/index.jsp");
         return modelAndView;

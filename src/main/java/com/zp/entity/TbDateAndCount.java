@@ -16,4 +16,5 @@ public class TbDateAndCount {
     private Integer noteCount;
    // @DateTimeFormat(pattern = "YYYY MM")
     private String groupName;
+    private Integer typeId;
 }
