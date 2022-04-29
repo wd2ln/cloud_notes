@@ -1,0 +1,8 @@
+环境jdk11  mysql 8.0
+1.springboot整合mybatis路径问题。不需要设置jsp前缀后缀啥的
+2.分页不能用问题----不能使用           <dependency>-->
+                        <!--            <groupId>com.github.pagehelper</groupId>-->
+                        <!--            <artifactId>pagehelper</artifactId>-->
+                        <!--            <version>5.2.0</version>-->
+                        <!--        </dependency>-->依赖
+                        应该使用pagehelper-spring-boot-starter依赖
