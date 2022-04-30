@@ -2,11 +2,10 @@ package com.zp.controller;
 
 import com.zp.entity.TbUser;
 import com.zp.service.TbUserService;
+import com.zp.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -83,7 +82,7 @@ public class TbUserController {
         modelAndView.setViewName("/login.jsp");
         return modelAndView;
     }
-    @GetMapping("userCenter")
+    @RequestMapping("userCenter")
     public ModelAndView center(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession(false);
         session.setAttribute("menu_page","user");
@@ -93,16 +92,27 @@ public class TbUserController {
         modelAndView.setViewName("forward:/index.jsp");
         return modelAndView;
     }
-    @PostMapping("update")
-    public ModelAndView update(HttpServletRequest request, HttpServletResponse response
-                                //@Parm
+    @RequestMapping("update")
+    public ModelAndView update(HttpServletRequest request, HttpServletResponse response,
+                                @RequestPart(value = "img",required = false)
+                                        MultipartFile img,
+                               @RequestParam(required = false) String nick,
+                               @RequestParam(required = false) String mood
     ){
+        //获取用户id
         HttpSession session = request.getSession(false);
-        session.setAttribute("menu_page","user");
-        session.setAttribute("changePage","user/info.jsp");
+        TbUser user = (TbUser) session.getAttribute("user");
+        Integer id = user.getId();
+        System.out.println(img+"==============");
+        //上传图片
+        if (img!=null){
+            String upload = FileUploadUtil.upload(img);
+                tbUserService.imgUp(upload,id,nick,mood);
+        }
         //创建返回视图
         ModelAndView modelAndView =new ModelAndView();
-        modelAndView.setViewName("forward:/index.jsp");
+//        modelAndView.setViewName("forward:/index/page?id="+id);
+        modelAndView.setViewName("forward:/user/userCenter");
         return modelAndView;
     }
 }

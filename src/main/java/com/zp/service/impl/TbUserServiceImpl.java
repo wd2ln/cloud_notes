@@ -1,6 +1,7 @@
 package com.zp.service.impl;
 
 import com.zp.dao.TbUserMapper;
+import com.zp.entity.TbNote;
 import com.zp.entity.TbUser;
 import com.zp.entity.TbUserExample;
 import com.zp.service.TbUserService;
@@ -28,5 +29,33 @@ public class TbUserServiceImpl extends HttpServlet implements TbUserService {
             return tbUsers.get(0);
         }
         return null;
+    }
+
+    @Override
+    public Boolean updates(String mood, String nick) {
+        TbUser tbUser = new TbUser();
+        tbUser.setMood(mood);
+        tbUser.setNick(nick);
+        int i = tbUserMapper.updateByPrimaryKeySelective(tbUser);
+        if (i>1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean imgUp(String filename,Integer id,String nick,String mood) {
+        TbUser tbUser = new TbUser();
+        if (filename!=null){
+            tbUser.setHead("http:localhost:8080/unload/"+filename);
+        }
+        tbUser.setId(id);
+        tbUser.setMood(mood);
+        tbUser.setNick(nick);
+        int i = tbUserMapper.updateByPrimaryKeySelective(tbUser);
+        if (i>1){
+            return true;
+        }
+        return false;
     }
 }
