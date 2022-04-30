@@ -65,6 +65,19 @@ public class TbNoteServiceImpl implements TbNoteService {
     }
 
     @Override
+    public Map<String, Object> selectTypess(Integer noteId, Integer id) {
+        HashMap<String, Object> map = new HashMap<>();
+        if (noteId==null){
+            List<TbNote> tbNotes = tbNoteMapper.selectByExample(null);
+            map.put("list",tbNotes);
+        }else {
+            TbNote tbNote = tbNoteMapper.selectByPrimaryKey(noteId);
+            map.put("list",tbNote);
+        }
+        return map;
+    }
+
+    @Override
     public Map<String, Object> getDateType(TbNote tbNote) {
         //设置查询所需的参数
         Integer user_id = tbNote.getId();

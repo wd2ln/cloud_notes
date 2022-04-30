@@ -74,6 +74,11 @@
       tb_note tn on tnt.id=tn.type_id and tnt.user_id=#{user_id,jdbcType=INTEGER}
       GROUP BY tn.type_id ORDER BY noteCount DESC;
   </select>
+  <select id="selectByTypeAll" parameterType="java.lang.Integer" resultType="com.zp.entity.TbNote">
+    SELECT tn.* from tb_note tn
+    INNER JOIN tb_note_type tnt
+    on tn.type_id=tnt.id and tnt.user_id=#{user_id,jdbcType=INTEGER}
+  </select>
 <!--  结束-->
   <select id="selectByExample" parameterType="com.zp.entity.TbNoteTypeExample" resultMap="BaseResultMap">
     select

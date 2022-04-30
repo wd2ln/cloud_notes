@@ -11,4 +11,6 @@ public interface TbNoteService {
     Map<String,Object> getDateInfo(TbNote tbNote);
 
     Map<String,Object> getDateType(TbNote tbNote);
+
+    Map<String, Object> selectTypess(Integer noteId, Integer id);
 }
