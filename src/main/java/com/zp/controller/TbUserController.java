@@ -3,6 +3,7 @@ package com.zp.controller;
 import com.zp.entity.TbUser;
 import com.zp.service.TbUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +52,7 @@ public class TbUserController {
             }
             response.addCookie(cookie);
             modelAndView=new ModelAndView();
-            modelAndView.setViewName("/index/page");
+            modelAndView.setViewName("/index/page?id="+status.getId());
         }else {
             modelAndView=new ModelAndView();
             modelAndView.addObject("tbNote",status);
@@ -61,7 +62,7 @@ public class TbUserController {
         }
         return modelAndView;
     }
-    @RequestMapping("logout")
+    @GetMapping("logout")
     public ModelAndView loginout(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession(false);
         // 判断session是否为空
@@ -80,6 +81,28 @@ public class TbUserController {
         //创建返回视图
         ModelAndView modelAndView =new ModelAndView();
         modelAndView.setViewName("/login.jsp");
+        return modelAndView;
+    }
+    @GetMapping("userCenter")
+    public ModelAndView center(HttpServletRequest request, HttpServletResponse response){
+        HttpSession session = request.getSession(false);
+        session.setAttribute("menu_page","user");
+        session.setAttribute("changePage","user/info.jsp");
+        //创建返回视图
+        ModelAndView modelAndView =new ModelAndView();
+        modelAndView.setViewName("forward:/index.jsp");
+        return modelAndView;
+    }
+    @PostMapping("update")
+    public ModelAndView update(HttpServletRequest request, HttpServletResponse response
+                                //@Parm
+    ){
+        HttpSession session = request.getSession(false);
+        session.setAttribute("menu_page","user");
+        session.setAttribute("changePage","user/info.jsp");
+        //创建返回视图
+        ModelAndView modelAndView =new ModelAndView();
+        modelAndView.setViewName("forward:/index.jsp");
         return modelAndView;
     }
 }

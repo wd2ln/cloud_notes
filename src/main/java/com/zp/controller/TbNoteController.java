@@ -20,13 +20,15 @@ public class TbNoteController {
     private TbNoteService tbNoteService;
     @PostMapping("page")
     public ModelAndView indexPage(HttpServletRequest request, HttpServletResponse response,
+                                  Integer id,
                                   @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                  @RequestParam(value = "pageSize",defaultValue = "3") Integer pageSize){
+                                  @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         HttpSession session = request.getSession(false);
         //获取用户id
-        TbUser user = (TbUser) session.getAttribute("user");
+        //TbUser user = (TbUser) session.getAttribute("user");
         TbNote tbNote = new TbNote();
-        tbNote.setTypeId(user.getId());
+        //tbNote.setId(user.getId());
+        tbNote.setId(id);
         //获取云记列表
         Map<String, Object> dates = tbNoteService.getDates(tbNote, pageNum, pageSize);
         session.setAttribute("page",dates.get("pageinfo"));
@@ -36,6 +38,9 @@ public class TbNoteController {
         //获取云记类别
         Map<String, Object> dateType = tbNoteService.getDateType(tbNote);
         session.setAttribute("typeInfo",dateType.get("typeinfo"));
+        //主页8、9
+        session.setAttribute("menu_page","index");
+        session.setAttribute("changePage","note/list.jsp");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/index.jsp");
         return modelAndView;

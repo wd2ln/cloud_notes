@@ -27,7 +27,7 @@ public class TbNoteServiceImpl implements TbNoteService {
         //设置查询所需的参数
         TbNoteExample tbNoteExample = new TbNoteExample();
         TbNoteExample.Criteria criteria = tbNoteExample.createCriteria();
-        criteria.andTypeIdEqualTo((tbNote.getTypeId()));
+        criteria.andTypeIdEqualTo((tbNote.getId()));
         //设置分页
         PageHelper.startPage(pageNum,pageSize);
         //获取查询结果
@@ -48,7 +48,7 @@ public class TbNoteServiceImpl implements TbNoteService {
     @Override
     public Map<String, Object> getDateInfo(TbNote tbNote) {
         //设置查询所需的参数
-        Integer typeId = tbNote.getTypeId();
+        Integer typeId = tbNote.getId();
         List<TbDateAndCount> tbDateAndCounts = tbNoteMapper.selectByDateAndCount(typeId);
         //处理返回日期格式
         for (TbDateAndCount tbDateAndCount : tbDateAndCounts) {
@@ -67,7 +67,7 @@ public class TbNoteServiceImpl implements TbNoteService {
     @Override
     public Map<String, Object> getDateType(TbNote tbNote) {
         //设置查询所需的参数
-        Integer user_id = tbNote.getTypeId();
+        Integer user_id = tbNote.getId();
         System.out.println(user_id+"=================");
         List<TbDateAndCount> tbDateAndCounts=null;
         tbDateAndCounts = tbNoteTypeMapper.selectByType(user_id);
