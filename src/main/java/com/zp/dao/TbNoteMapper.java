@@ -17,6 +17,8 @@ public interface TbNoteMapper {
     int deleteByPrimaryKey(Integer id);
     //自定义
     List<TbDateAndCount> selectByDateAndCount(Integer typeId);
+    //自定义
+    List<TbNote> sell(String date);
 
     int insert(TbNote record);
 

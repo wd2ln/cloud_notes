@@ -24,20 +24,48 @@ public class TbNoteServiceImpl implements TbNoteService {
     private TbNoteTypeMapper tbNoteTypeMapper;
     @Override
     public Map<String,Object> getDates(TbNote tbNote, Integer pageNum, Integer pageSize) {
+        Map<String,Object> map=null;
+        if(tbNote.getDate()!=null){
+            System.out.println("找到了");
+            //设置分页
+            PageHelper.startPage(pageNum,pageSize);
+            String date = tbNote.getDate();
+            String[] years = date.split("年");
+            String mm = years[1].substring(0, 2);
+            map = getdateAll(years[0]+" "+mm);
+            List<TbNote> sell = (List<TbNote>)map.get("sell");
+            System.out.println(sell.get(0).getPubTime());
+            System.out.println(sell.get(0).getDate());
+            //将分页结果放入
+            PageInfo<TbNote> tPageInfo = new PageInfo<>(sell);
+//            map=new HashMap<String, Object>();
+            map.put("pageinfo",tPageInfo);
+            map.put("total",tPageInfo.getTotal());
+            return map;
+        }
+
+
         //设置查询所需的参数
         TbNoteExample tbNoteExample = new TbNoteExample();
         TbNoteExample.Criteria criteria = tbNoteExample.createCriteria();
-        criteria.andTypeIdEqualTo((tbNote.getId()));
+        //判断是否传入typeid
+        if (tbNote.getTypeId()==null){
+
+            criteria.andIdEqualTo((tbNote.getId()));
+        }if (tbNote.getTypeId()!=null){
+            criteria.andTypeIdEqualTo(tbNote.getTypeId());
+        }
+
         //设置分页
         PageHelper.startPage(pageNum,pageSize);
         //获取查询结果
         List<TbNote> tbNotes = tbNoteMapper.selectByExample(tbNoteExample);
-        Map<String, Object> map =null;
+        //Map<String, Object> map =null;
         //有数据
         if (tbNotes!=null){
             //将分页结果放入
             PageInfo<TbNote> tbNotePageInfo = new PageInfo<>(tbNotes);
-            System.out.println(tbNotePageInfo);
+            //System.out.println(tbNotePageInfo);
             map=new HashMap<String, Object>();
             map.put("pageinfo",tbNotePageInfo);
             map.put("total",tbNotePageInfo.getTotal());
@@ -61,6 +89,14 @@ public class TbNoteServiceImpl implements TbNoteService {
         Map<String,Object> map;
         map=new HashMap<String, Object>();
         map.put("dateinfo",tbDateAndCounts);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getdateAll(String date) {
+        HashMap<String, Object> map = new HashMap<>();
+        List<TbNote> sell = tbNoteMapper.sell(date);
+        map.put("sell",sell);
         return map;
     }
 

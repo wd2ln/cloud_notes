@@ -17,4 +17,5 @@ public class TbDateAndCount {
    // @DateTimeFormat(pattern = "YYYY MM")
     private String groupName;
     private Integer typeId;
+
 }

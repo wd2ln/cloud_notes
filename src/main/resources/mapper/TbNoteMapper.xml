@@ -116,6 +116,10 @@
     count(*) noteCount from tb_note where type_id=#{type_id,jdbcType=INTEGER} group by DATE_FORMAT(pub_time,'%Y %m')
      ORDER BY DATE_FORMAT(pub_time,'%Y %m')
   </select>
+  <select id="sell" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select tn.* from tb_note tn
+    where type_id=1 and DATE_FORMAT(pub_time,'%Y %m')=#{date,jdbcType=VARCHAR}
+  </select>
 <!--  新建 end-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 

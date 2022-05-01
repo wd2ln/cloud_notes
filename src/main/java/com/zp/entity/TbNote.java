@@ -14,6 +14,16 @@ public class TbNote {
 
     private Date pubTime;
 
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     private Float lon;
 
     private Float lat;

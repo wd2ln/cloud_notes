@@ -69,7 +69,7 @@
   </sql>
 <!--  自定义开始-->
   <select id="selectByType" parameterType="java.lang.Integer" resultType="com.zp.entity.TbDateAndCount">
-    select tnt.type_name groupName,count(*) noteCount
+    select tnt.type_name groupName,count(*) noteCount,tn.type_id typeId
     from tb_note_type tnt INNER JOIN
       tb_note tn on tnt.id=tn.type_id and tnt.user_id=#{user_id,jdbcType=INTEGER}
       GROUP BY tn.type_id ORDER BY noteCount DESC;

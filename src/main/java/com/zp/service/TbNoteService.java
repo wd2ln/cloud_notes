@@ -13,4 +13,6 @@ public interface TbNoteService {
     Map<String,Object> getDateType(TbNote tbNote);
 
     Map<String, Object> selectTypess(Integer noteId, Integer id);
+
+    Map<String, Object> getdateAll(String date);
 }
