@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServlet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TbUserServiceImpl extends HttpServlet implements TbUserService {
@@ -29,6 +31,24 @@ public class TbUserServiceImpl extends HttpServlet implements TbUserService {
             return tbUsers.get(0);
         }
         return null;
+    }
+
+    @Override
+    public String selectNick(String nick) {
+        TbUserExample tbUserExample = new TbUserExample();
+        tbUserExample.createCriteria()
+                .andNickEqualTo(nick);
+        List<TbUser> tbUsers = tbUserMapper.selectByExample(tbUserExample);
+
+    String code=null;
+        if (tbUsers.size()>1){
+             code="1";
+            System.out.println(1);
+        }else {
+             code="0";
+            System.out.println(0);
+        }
+        return code;
     }
 
     @Override

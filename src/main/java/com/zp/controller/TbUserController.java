@@ -12,6 +12,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
+import static javax.swing.UIManager.put;
 
 @RestController
 @RequestMapping("user")
@@ -114,5 +118,14 @@ public class TbUserController {
 //        modelAndView.setViewName("forward:/index/page?id="+id);
         modelAndView.setViewName("forward:/user/userCenter");
         return modelAndView;
+    }
+    //验证昵称唯一性
+    @GetMapping("checkNick")
+    public Map<String,Object> checkNick(String nick){
+        String code=tbUserService.selectNick(nick);
+        System.out.println(code);
+        Map<String, Object> map = new HashMap<>();
+        map.put("code",code);
+        return map;
     }
 }
