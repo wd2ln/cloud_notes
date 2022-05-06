@@ -120,6 +120,19 @@
     select tn.* from tb_note tn
     where type_id=1 and DATE_FORMAT(pub_time,'%Y %m')=#{date,jdbcType=VARCHAR}
   </select>
+  <select id="selectMCS" parameterType="java.lang.Integer" resultType="com.zp.vo.MonthCountVo">
+    SELECT DATE_FORMAT(tn.pub_time,'%Y年%m月')
+     `month`,COUNT(tu.id) `count` FROM tb_user tu
+     INNER JOIN tb_note_type tnt ON tnt.user_id=tu.id
+     INNER JOIN tb_note tn ON tn.type_id=tnt.id
+      AND tu.id=#{id,jdbcType=INTEGER} GROUP BY DATE_FORMAT(tn.pub_time,'%Y年%m月') ORDER BY DATE_FORMAT(tn.pub_time,'%Y年%m月')
+  </select>
+  <select id="selectNS" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT tn.* FROM tb_user tu
+    INNER JOIN tb_note_type tnt
+    ON tu.id=tnt.user_id INNER JOIN
+    tb_note tn ON tn.type_id=tnt.id AND tu.id=#{id,jdbcType=INTEGER}
+  </select>
 <!--  新建 end-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
@@ -129,6 +142,7 @@
     from tb_note
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_note
     where id = #{id,jdbcType=INTEGER}

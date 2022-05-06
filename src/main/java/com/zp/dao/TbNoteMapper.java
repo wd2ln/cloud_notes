@@ -3,6 +3,7 @@ package com.zp.dao;
 import com.zp.entity.TbDateAndCount;
 import com.zp.entity.TbNote;
 import com.zp.entity.TbNoteExample;
+import com.zp.vo.MonthCountVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,7 @@ public interface TbNoteMapper {
     List<TbNote> selectByExample(TbNoteExample example);
 
     TbNote selectByPrimaryKey(Integer id);
+    List<TbNote> selectNS(Integer id);
 
     int updateByExampleSelective(@Param("record") TbNote record, @Param("example") TbNoteExample example);
 
@@ -41,4 +43,6 @@ public interface TbNoteMapper {
     int updateByPrimaryKeyWithBLOBs(TbNote record);
 
     int updateByPrimaryKey(TbNote record);
+
+    List<MonthCountVo> selectMCS(Integer id);
 }
