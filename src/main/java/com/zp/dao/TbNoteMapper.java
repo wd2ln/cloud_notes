@@ -28,6 +28,7 @@ public interface TbNoteMapper {
     List<TbNote> selectByExampleWithBLOBs(TbNoteExample example);
 
     List<TbNote> selectByExample(TbNoteExample example);
+    List<TbNote> selectByExample1(String title);
 
     TbNote selectByPrimaryKey(Integer id);
     List<TbNote> selectNS(Integer id);

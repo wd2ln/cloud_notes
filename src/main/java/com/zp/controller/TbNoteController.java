@@ -22,11 +22,15 @@ public class TbNoteController {
     public ModelAndView indexPage(HttpServletRequest request, HttpServletResponse response,
                                   Integer id,
                                   String date,
+                                  String title,
                                   @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                   @RequestParam(value = "pageSize",defaultValue = "6") Integer pageSize){
         HttpSession session = request.getSession(false);
         //获取用户id
         TbUser user = (TbUser) session.getAttribute("user");
+        //获取title
+        String title1 = (String)session.getAttribute("title");
+        //设置参数
         TbNote tbNote = new TbNote();
         if(id!=null){
 
@@ -34,6 +38,10 @@ public class TbNoteController {
         }
         if (date!=null){
             tbNote.setDate(date);
+        }
+        if (title1!=null){
+            System.out.println("找到title");
+            tbNote.setTitle(title1);
         }
         tbNote.setId(user.getId());
         //tbNote.setPubTime();
@@ -79,6 +87,14 @@ public class TbNoteController {
         Map<String, Object> map = tbNoteService.getdateAll(years[0]+" "+mm);
         System.out.println(map);
         session.setAttribute("pubTime",map.get("sell"));
+        ModelAndView modelAndView =new ModelAndView();
+        modelAndView.setViewName("forward:/index/page");
+        return modelAndView;
+    }
+    @GetMapping("searchTitle")
+    public ModelAndView searchTitle(HttpSession session,String title){
+        System.out.println("开始转发，执行查找");
+        session.setAttribute("title",title);
         ModelAndView modelAndView =new ModelAndView();
         modelAndView.setViewName("forward:/index/page");
         return modelAndView;

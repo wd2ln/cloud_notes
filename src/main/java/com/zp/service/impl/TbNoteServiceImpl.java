@@ -50,10 +50,29 @@ public class TbNoteServiceImpl implements TbNoteService {
         TbNoteExample.Criteria criteria = tbNoteExample.createCriteria();
         //判断是否传入typeid
         if (tbNote.getTypeId()==null){
-
+            System.out.println("找到id");
             criteria.andIdEqualTo((tbNote.getId()));
         }if (tbNote.getTypeId()!=null){
+            System.out.println("找到typeid");
             criteria.andTypeIdEqualTo(tbNote.getTypeId());
+        }if (tbNote.getTitle()!=null){
+            String ss="%"+tbNote.getTitle()+"%";
+            System.out.println("找到title");
+            //设置分页
+            PageHelper.startPage(pageNum,pageSize);
+            //获取查询结果
+            List<TbNote> tbNotes = tbNoteMapper.selectByExample1(ss);
+            //Map<String, Object> map =null;
+            //有数据
+            if (tbNotes!=null){
+                //将分页结果放入
+                PageInfo<TbNote> tbNotePageInfo = new PageInfo<>(tbNotes);
+                //System.out.println(tbNotePageInfo);
+                map=new HashMap<String, Object>();
+                map.put("pageinfo",tbNotePageInfo);
+                map.put("total",tbNotePageInfo.getTotal());
+            }
+            return map;
         }
 
         //设置分页

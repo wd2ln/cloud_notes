@@ -110,6 +110,15 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByExample1" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+    SELECT tn.*
+     FROM tb_user tu INNER JOIN
+     tb_note_type tnt ON tu.id =tnt.user_id
+     INNER JOIN tb_note tn ON tnt.id=tn.type_id
+     AND tu.id=1 and tn.title LIKE  #{title,jdbcType=VARCHAR}
+
+  </select>
 <!--  新建 start-->
   <select id="selectByDateAndCount" parameterType="java.lang.Integer" resultType="com.zp.entity.TbDateAndCount">
     select DATE_FORMAT(pub_time,'%Y %m') groupName,
