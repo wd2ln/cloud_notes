@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zp.dao.TbNoteMapper;
 import com.zp.dao.TbNoteTypeMapper;
-import com.zp.entity.TbDateAndCount;
-import com.zp.entity.TbNote;
-import com.zp.entity.TbNoteExample;
-import com.zp.entity.TbNoteTypeExample;
+import com.zp.entity.*;
 import com.zp.service.TbNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,6 +109,26 @@ public class TbNoteServiceImpl implements TbNoteService {
     }
 
     @Override
+    public Boolean del(Integer id) {
+        int i = tbNoteMapper.deleteByPrimaryKey(id);
+        if (i>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public TbNote selectById(Integer id) {
+        TbNote tbNote = tbNoteMapper.selectByPrimaryKey(id);
+        if (tbNote!=null){
+            //获取日记类型
+            TbNoteType tbNoteType = tbNoteTypeMapper.selectByPrimaryKey(tbNote.getTypeId());
+            tbNote.setTypeName(tbNoteType.getTypeName());
+        }
+        return tbNote;
+    }
+
+    @Override
     public Map<String, Object> getdateAll(String date) {
         HashMap<String, Object> map = new HashMap<>();
         List<TbNote> sell = tbNoteMapper.sell(date);
@@ -136,11 +153,8 @@ public class TbNoteServiceImpl implements TbNoteService {
     public Map<String, Object> getDateType(TbNote tbNote) {
         //设置查询所需的参数
         Integer user_id = tbNote.getId();
-        System.out.println(user_id+"=================");
         List<TbDateAndCount> tbDateAndCounts=null;
         tbDateAndCounts = tbNoteTypeMapper.selectByType(user_id);
-        System.out.println("异常");
-        System.out.println(tbDateAndCounts);
         Map<String,Object> map;
         map=new HashMap<String, Object>();
         map.put("typeinfo",tbDateAndCounts);

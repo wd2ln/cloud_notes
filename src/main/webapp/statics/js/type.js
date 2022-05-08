@@ -172,6 +172,7 @@ $("#btn_submit").click(function () {
     // 如果是修改操作，则获取类型ID
     var id = $("#id").val();
 
+
     // 2. 判断参数是否为空（类型名称）
     if (isEmpty(typeName)) {
         // 如果为空，提示信息，并return

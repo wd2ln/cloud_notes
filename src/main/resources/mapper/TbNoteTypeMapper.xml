@@ -116,7 +116,7 @@
     values (#{id,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zp.entity.TbNoteType">
+  <insert id="insertSelective" parameterType="com.zp.entity.TbNoteType" useGeneratedKeys="true" keyProperty="id">
     insert into tb_note_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

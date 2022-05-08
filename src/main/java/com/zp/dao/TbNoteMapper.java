@@ -46,4 +46,6 @@ public interface TbNoteMapper {
     int updateByPrimaryKey(TbNote record);
 
     List<MonthCountVo> selectMCS(Integer id);
+
+    List<TbNote> selectbyTypeId(Integer id);
 }

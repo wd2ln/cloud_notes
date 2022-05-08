@@ -142,6 +142,14 @@
     ON tu.id=tnt.user_id INNER JOIN
     tb_note tn ON tn.type_id=tnt.id AND tu.id=#{id,jdbcType=INTEGER}
   </select>
+  <select id="selectbyTypeId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_note
+    where type_id = #{id,jdbcType=INTEGER}
+  </select>
 <!--  新建 end-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 

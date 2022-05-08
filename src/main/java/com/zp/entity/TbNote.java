@@ -7,7 +7,6 @@ import java.util.Date;
 @Component
 public class TbNote {
     private Integer id;
-
     private String title;
 
     private Integer typeId;

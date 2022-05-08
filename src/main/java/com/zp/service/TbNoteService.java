@@ -15,4 +15,8 @@ public interface TbNoteService {
     Map<String, Object> selectTypess(Integer noteId, Integer id);
 
     Map<String, Object> getdateAll(String date);
+
+    TbNote selectById(Integer id);
+
+    Boolean del(Integer id);
 }
